@@ -12,8 +12,8 @@ body {
     
 }
 @font-face {
-    font-family: "Coolvetica Rg";
-    src: url('C:\Users\Arsh\Desktop\ANIME WEBSITE\TheNextFont.ttf') format('truetype');
+    font-family: "The Next Font";
+    src: url('https://github.com/arsh-baktoo/poseidon.tv-/blob/main/TheNextFont.ttf') format('truetype');
 }
 .sidebar {
     width: 300px;
