@@ -1,1 +1,16 @@
+{
+  "name": "Poseidon.tv",
+  "version": "1.0.0",
+  "description": "Free anime viewing website",
+  "main": "index.html",
+  "scripts": {
+    "start": "node script.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arsh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
 
