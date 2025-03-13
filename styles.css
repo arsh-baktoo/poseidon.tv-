@@ -13,7 +13,7 @@ body {
 }
 @font-face {
     font-family: "The Next Font";
-    src: url('https://github.com/arsh-baktoo/poseidon.tv-/blob/main/TheNextFont.ttf') format('truetype');
+    src: url('C:\Users\Arsh\Desktop\ANIME WEBSITE\TheNextFont.ttf') format('truetype');
 }
 .sidebar {
     width: 300px;
@@ -165,6 +165,7 @@ body {
     font-size: 12px;
     color: #4CAF50;
 }
+
 .header-icons button {
     background: none;
     border: none;
