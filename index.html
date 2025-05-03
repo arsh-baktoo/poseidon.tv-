@@ -3,154 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poseidon.TV</title>
-        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-        <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico.png" /> -->
-     
-    <link rel="stylesheet" href="styles.css">
+    <title>POSEIDON.tv</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="popup-overlay">
-        <div class="popup">
-            <div class="popup-content">
-                <div class="popup-image">
-                    <img src="https://cdn.dribbble.com/userupload/10019422/file/original-e4c2f130af8bad967c72a54bb5c406e9.png?resize=752x890&vertical=center/placeholder.svg?height=300&width=300" alt="Anime character">
-                    <button class="info-btn" aria-label="Information">i</button>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">POSEIDON<span>.tv</span></div>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#">Movies</a>
+                <a href="#">TV Shows</a>
+                <a href="#">New Releases</a>
+                <a href="#">My List</a>
+            </div>
+            <div class="nav-actions">
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                    <i class="fas fa-search"></i>
                 </div>
-                <div class="popup-text">
-                    <h2>WELCOME TO POSEIDON.TV</h2>
-                    <p>ウェブサイトへようこそ</p>
-                    <p>This site uses cookies. By clicking continue you accept our terms and conditions.</p>
-                    <button class="continue-btn">CONTINUE</button>
-                    <button class="close-btn" aria-label="Close">×</button>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=User&background=ff0000&color=fff&rounded=true&bold=true" alt="User Profile">
                 </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="badges">
+                <span class="badge">NOW TRENDING</span>
+                <span class="badge">IMDB</span>
+            </div>
+            <div class="hero-title"></div>
+            <br>
+            <div class="hero-description"></div>
+            <br>
+            <button class="watch-btn">WATCH NOW <i class="fas fa-play-circle"></i></button>
+        </div>
+    </div>
+
+    <!-- Trending Movies Section -->
+    <div class="movies-section">
+        <div class="section-header">
+            <h2>Now trending</h2>
+            <div class="slider-controls">
+                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="movie-slider" id="trendingMovies">
+            <!-- Movies will be populated here -->
+        </div>
+    </div>
+
+    <!-- Popular Movies Section -->
+    <div class="movies-section">
+        <div class="section-header">
+            <h2>Popular movies</h2>
+            <div class="slider-controls">
+                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="movie-slider" id="popularMovies">
+            <!-- Movies will be populated here -->
+        </div>
+    </div>
+
+    <!-- Top Rated Movies Section -->
+    <div class="movies-section">
+        <div class="section-header">
+            <h2>Top Rated</h2>
+            <div class="slider-controls">
+                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="movie-slider" id="topRatedMovies">
+            <!-- Movies will be populated here -->
+        </div>
+    </div>
+
+    <!-- Movie Details Modal -->
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <!-- Movie details will be populated here -->
             </div>
         </div>
     </div>
-    <div class="sidebar">
-        <div class="banner">
-            <img src="https://cdn.dribbble.com/userupload/15538666/file/original-6aca8c029f2a242cd8dd2c86f1a8040a.png?resize=1024x1161/placeholder.svg?height=150&width=900" alt="Anime character">
-        </div>
-        <div class="logo">
-            <h1>POSEIDON.TV</h1>
-            <p>アニメサイト</p>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search Anime">
-            <span class="search-icon">🔍</span>
-        </div>
-        <div class="welcome-back">
-            <h2>Welcome Back Arsh!</h2>
-            <div class="watching-item">
-                <div class="watching-thumbnail">
-                    <img src="https://cdn.dribbble.com/users/1457154/screenshots/6508150/luffy_4x.png?resize=1000x750&vertical=center/placeholder.svg?height=80&width=80" alt="One Piece">
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>POSEIDON<span>.tv</span></h2>
+                <p>Your ultimate movie streaming platform</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <a href="#">Home</a>
+                    <a href="#">Movies</a>
+                    <a href="#">TV Shows</a>
+                    <a href="#">New Releases</a>
                 </div>
-                <div class="watching-info">
-                    <h3>One Piece</h3>
-                    <p>Episode 645</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 70%;"></div>
-                    </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <a href="#">Help Center</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
                 </div>
             </div>
-            <div class="watching-item">
-                <div class="watching-thumbnail">
-                    <img src="https://m.media-amazon.com/images/I/716ASj7z2GL._AC_UF1000,1000_QL80_.jpg" alt="Death Note">
-                </div>
-                <div class="watching-info">
-                    <h3>Death Note</h3>
-                    <p>Episode 3</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 30%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-content">
-        <div class="header">
-            <div class="user-profile">
-                <div class="user-avatar">
-                    A
-                    <span class="user-level">10</span>
-                </div>
-                <div class="user-info">
-                    <h3>ARSH</h3>
-                    <p>LEVEL 10</p>
-                </div>
-            </div>
-            <div class="header-icons">
-                <button aria-label="Videos">📺</button>
-                <button  aria-label="Favorites">❤️</button>
-                <button aria-label="Settings">⚙️</button>
-            </div>
-        </div>
-       
-        <div class="container">
-            <div class="watching-count">
-                <h3>3 WATCHING</h3>
-            </div>
-            <div class="featured-content">
-                <img 
-                    src="https://cdn.dribbble.com/userupload/6517080/file/original-f8cd2f63f12c344f6872cfbe2396f528.png?resize=1024x768" 
-                    alt="Naruto: Shippuden" 
-                    class="featured-banner"
-                >
-                <div class="featured-gradient-overlay"></div>
-                <div class="featured-content-overlay">
-                    <p class="featured-season">Season 1 - 2007</p>
-                    <h1 class="featured-title">Naruto: Shippuden</h1>
-                    <p class="featured-description">Naruto Uzumaki, is a loud, hyperactive, adolescent ninja who constantly searches for approval and recognition, as well as to become Hokage, who is acknowledged as the leader and strongest of all ninja in the village. Naruto Uzumaki wants to be the best ninja in the land.</p>
-                    <div class="featured-buttons">
-                        <button class="featured-btn-stream">▶ STREAM</button>
-                        <button class="featured-btn-icon">♥</button>
-                        <button class="featured-btn-icon">🔗</button>
-                    </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
-        <h3 class="section-title">TRENDING</h3>
-        <div class="trending-grid">
-            <div class="trending-item">
-                <span class="trending-number">1</span>
-                <img class="trending-thumbnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkf3eX8M12HE78_XTHPzT6H0W8f5INDL7XIA&s/placeholder.svg?height=150&width=250" alt="Hell's Paradise">
-                <div class="trending-info">
-                    <h4>HELL'S PARADISE</h4>
-                    <p>Liked by 🎮 👾</p>
-                    <div class="trending-buttons">
-                        <button>▶</button>
-                        <button>❤️</button>
-                    </div>
-                </div>
-            </div>
-            <div class="trending-item">
-                <span class="trending-number">2</span>
-                <img class="trending-thumbnail" src="https://resizing.flixster.com/uVfKg66htHRiqD-MXy3T7AD0uDM=/ems.cHJkLWVtcy1hc3NldHMvdHZzZWFzb24vZmQyYjI4MjAtOThmMC00MTA0LWIwMmMtMjc3MTdiMzhmOTcyLmpwZw==" alt="My Star">
-                <div class="trending-info">
-                    <h4>MY STAR</h4>
-                    <p>Liked by 🎮 👾</p>
-                    <div class="trending-buttons">
-                        <button>▶</button>
-                        <button>❤️</button>
-                    </div>
-                </div>
-            </div>
-            <div class="trending-item">
-                <span class="trending-number">3</span>
-                <img class="trending-thumbnail" src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p10701949_b_v8_ah.jpg" alt="Attack on Titan">
-                <div class="trending-info">
-                    <h4>ATTACK ON TITAN</h4>
-                    <p>Liked by 🎮 👾</p>
-                    <div class="trending-buttons">
-                        <button>▶</button>
-                        <button>❤️</button>
-                    </div>
-                </div>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 POSEIDON.tv. All rights reserved.</p>
         </div>
-        <h3 class="section-title">NEW SHOWS</h3>
-        <!-- New shows content would go here -->
-    </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
