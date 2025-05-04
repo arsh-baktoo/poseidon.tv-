@@ -5,8 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POSEIDON.tv</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <!-- Name Input Modal -->
+    <div id="nameModal" class="name-modal">
+        <div class="name-modal-content">
+            <h2>Welcome to POSEIDON.tv</h2>
+            <p>Please enter your name to continue</p>
+            <div class="name-input-container">
+                <input type="text" id="userNameInput" placeholder="Your Name" maxlength="20">
+                <button id="saveNameBtn" class="apply-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
@@ -30,8 +43,8 @@
                 <button id="preferencesBtn" class="preferences-btn">
                     <i class="fas fa-sliders-h"></i> Preferences
                 </button>
-                <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=User&background=ff0000&color=fff&rounded=true&bold=true" alt="User Profile">
+                <div class="user-profile" id="userProfile">
+                    <div class="user-initials">U</div>
                 </div>
             </div>
         </div>
@@ -407,11 +420,11 @@
     :root {
     --background-color: #0f1117;
     --text-color: #ffffff;
-    --accent-color: #007bff;
+    --accent-color: #00c6ff;
     --overlay-color: rgba(0, 0, 0, 0.7);
-    --primary-color: #ff0000;
+    --primary-color: #00c6ff;
     --secondary-color: #1e2130;
-    --navbar-bg: rgba(15, 17, 23, 0);
+    --navbar-bg: rgba(0, 0, 0, 0);
     --card-bg: rgba(30, 33, 48, 0.8);
     --modal-bg: #1a1c25;
     --light-bg: #f5f5f7;
@@ -419,7 +432,8 @@
     --light-secondary: #e1e1e6;
     --light-card: #ffffff;
     --light-modal: #ffffff;
-    --light-primary: #ff0000;
+    --light-primary: #00c6ff;
+    --gradient-primary: linear-gradient(45deg, #00c6ff, #0072ff);
 }
 
 html[data-theme="light"] {
@@ -429,7 +443,7 @@ html[data-theme="light"] {
     --card-bg: var(--light-card);
     --modal-bg: var(--light-modal);
     --primary-color: var(--light-primary);
-    --navbar-bg: rgba(245, 245, 247, 0.8);
+    --navbar-bg: rgba(245, 245, 247, 0);
 }
 
 * {
@@ -448,6 +462,26 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
 @font-face {
     font-family: "The Next Font";
     src: url('C:\Users\Arsh\Desktop\WEBSITE DESIGN\TheNextFont.ttf') format('opentype');
@@ -456,6 +490,85 @@ body {
 @font-face {
     font-family: "Coolvetica Rg";
     src: url('C:\Users\Arsh\Desktop\WEBSITE DESIGN\coolvetica rg.otf') format('opentype');
+}
+
+/* Name Modal Styles */
+.name-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.name-modal-content {
+    background-color: var(--modal-bg);
+    padding: 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.5s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.name-modal-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.name-modal-content p {
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.name-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.name-input-container input {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.name-input-container input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.3);
+}
+
+.name-input-container .apply-btn {
+    margin-top: 10px;
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.name-input-container .apply-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
 }
 
 /* Page Styles */
@@ -468,11 +581,26 @@ body {
     padding: 60px 5% 30px;
     background-color: var(--secondary-color);
     margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0, 198, 255, 0.1), rgba(0, 114, 255, 0.1));
+    z-index: 0;
 }
 
 .page-header h1 {
     font-size: 3rem;
     margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
 }
 
 .page-header p {
@@ -480,6 +608,8 @@ body {
     opacity: 0.8;
     max-width: 600px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 /* Navbar Styles */
@@ -493,6 +623,7 @@ body {
     backdrop-filter: blur(10px);
     transition: background-color 0.3s ease;
     padding: 15px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
@@ -538,7 +669,7 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
 }
 
 .nav-actions {
@@ -653,7 +784,7 @@ body {
 }
 
 .preferences-btn {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: white;
     border: none;
     padding: 8px 15px;
@@ -667,16 +798,33 @@ body {
 }
 
 .preferences-btn:hover {
-    background-color: #ff3333;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
 }
 
-.user-profile img {
+.user-profile {
     width: 35px;
     height: 35px;
     border-radius: 50%;
     cursor: pointer;
-    border: 2px solid var(--primary-color);
+    border: 2px solid transparent;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.user-profile:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+}
+
+.user-initials {
+    font-size: 0.9rem;
+    text-transform: uppercase;
 }
 
 /* Mood Selector Styles */
@@ -744,7 +892,7 @@ body {
 
 .mood-option.selected {
     border-color: var(--primary-color);
-    background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgba(0, 198, 255, 0.1);
 }
 
 .mood-emoji {
@@ -792,7 +940,7 @@ body {
 .apply-btn {
     display: block;
     margin: 0 auto;
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: white;
     border: none;
     padding: 10px 25px;
@@ -803,8 +951,8 @@ body {
 }
 
 .apply-btn:hover {
-    background-color: #ff3333;
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
 }
 
 /* Hero Section Styles */
@@ -845,7 +993,7 @@ body {
 }
 
 .badge {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: var(--gradient-primary);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     margin-right: 1rem;
@@ -853,6 +1001,7 @@ body {
     font-size: 0.9rem;
     display: flex;
     align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 198, 255, 0.3);
 }
 
 .hero-content h1 {
@@ -874,7 +1023,7 @@ body {
 }
 
 .watch-btn {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: var(--text-color);
     border: none;
     padding: 0.8rem 2rem;
@@ -885,13 +1034,14 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .watch-btn:hover {
-    background-color: #ffffff;
-    color: black;
+    background: linear-gradient(45deg, #0072ff, #00c6ff);
+    color: white;
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.5);
 }
 
 .watch-btn i {
@@ -910,11 +1060,13 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    backdrop-filter: blur(5px);
 }
 
 .bookmark-btn:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .bookmark-btn i.fas {
@@ -946,7 +1098,7 @@ body {
     left: 0;
     width: 50px;
     height: 3px;
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
 }
 
 .slider-controls {
@@ -969,8 +1121,9 @@ body {
 }
 
 .slider-arrow:hover {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 198, 255, 0.3);
 }
 
 .slider-arrow i {
@@ -1007,6 +1160,7 @@ body {
 .movie-card:hover {
     transform: scale(1.05);
     z-index: 10;
+    box-shadow: 0 8px 25px rgba(0, 198, 255, 0.2);
 }
 
 .movie-card::after {
@@ -1253,7 +1407,7 @@ body {
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: white;
 }
 
@@ -1268,7 +1422,7 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #ff3333;
+    background: linear-gradient(45deg, #0072ff, #00c6ff);
 }
 
 .btn-secondary:hover {
@@ -1297,7 +1451,7 @@ body {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
 }
 
 .cast-list {
@@ -1350,6 +1504,18 @@ body {
     background-color: var(--secondary-color);
     padding: 50px 5% 20px;
     margin-top: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
 }
 
 .footer-content {
@@ -1393,7 +1559,7 @@ body {
     left: 0;
     width: 30px;
     height: 2px;
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
 }
 
 .footer-column a {
@@ -1429,7 +1595,7 @@ body {
     left: 0;
     width: 30px;
     height: 2px;
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
 }
 
 .social-icons {
@@ -1443,15 +1609,16 @@ body {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     color: white;
     transition: all 0.3s;
 }
 
 .social-icons a:hover {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
 }
 
 .footer-bottom {
@@ -1610,6 +1777,10 @@ const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original"
 
 // DOM Elements
 const modal = document.getElementById("movieModal")
+const nameModal = document.getElementById("nameModal")
+const userNameInput = document.getElementById("userNameInput")
+const saveNameBtn = document.getElementById("saveNameBtn")
+const userProfile = document.getElementById("userProfile")
 const closeModal = document.querySelector(".close-modal")
 const modalBody = document.querySelector(".modal-body")
 const navbar = document.querySelector(".navbar")
@@ -1643,6 +1814,46 @@ let currentHeroMovie = null
 let bookmarkedMoviesData = JSON.parse(localStorage.getItem('bookmarkedMovies')) || []
 let currentPage = "home"
 let searchTimeout = null
+let userName = localStorage.getItem('userName') || ''
+
+// Name modal functionality
+function showNameModal() {
+    if (!userName) {
+        nameModal.style.display = 'flex'
+    } else {
+        updateUserInitials(userName)
+    }
+}
+
+function saveUserName() {
+    const name = userNameInput.value.trim()
+    if (name) {
+        userName = name
+        localStorage.setItem('userName', name)
+        nameModal.style.display = 'none'
+        updateUserInitials(name)
+    } else {
+        // Shake the input to indicate error
+        userNameInput.classList.add('shake')
+        setTimeout(() => {
+            userNameInput.classList.remove('shake')
+        }, 500)
+    }
+}
+
+function updateUserInitials(name) {
+    if (!name) return
+    
+    // Get initials (first letter of each word, up to 2 letters)
+    const initials = name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .slice(0, 2)
+        .join('')
+    
+    const userInitialsElement = userProfile.querySelector('.user-initials')
+    userInitialsElement.textContent = initials || 'U'
+}
 
 // Theme toggle functionality
 function toggleTheme() {
@@ -1891,8 +2102,6 @@ async function openTVShowDetails(showId) {
         <div class="movie-detail-header" style="background-image: url('${showDetails.backdrop_path ? BACKDROP_BASE_URL + showDetails.backdrop_path : ""}')">
             <div class="movie-detail-info">
                 <img src="${showDetails.poster_path ? IMAGE_BASE_URL + showDetails.poster_path : "/placeholder.svg?height=300&width=200"}" 
-                     alt="${showDetails.name}" 
-                     class="movie-detail-
                      alt="${showDetails.name}" 
                      class="movie-detail-poster">
                 <div class="movie-detail-text">
@@ -2148,13 +2357,13 @@ async function fetchMovieVideos(movieId) {
     }
 }
 
-// Update hero section with now playing movie
+// Update hero section with popular movie
 async function updateHeroSection() {
     try {
-        // Changed from trending to now_playing
-        const nowPlayingMovies = await fetchMovies("/movie/now_playing")
-        if (nowPlayingMovies && nowPlayingMovies.length > 0) {
-            const featuredMovie = nowPlayingMovies[0] // Get the first now playing movie
+        // Get popular movies from the API
+        const popularMovies = await fetchMovies("/movie/popular")
+        if (popularMovies && popularMovies.length > 0) {
+            const featuredMovie = popularMovies[0] // Get the first popular movie
             currentHeroMovie = featuredMovie
 
             // Update hero background
@@ -2194,7 +2403,7 @@ async function updateHeroSection() {
                 })
             }
         } else {
-            console.error("No now playing movies found or empty response")
+            console.error("No popular movies found or empty response")
             // Fallback content
             heroTitle.innerHTML = "<h1>Welcome to Poseidon.tv</h1>"
             heroDescription.textContent = "Discover the best movies and TV shows all in one place."
@@ -2489,17 +2698,17 @@ async function applyUserPreferences() {
 // Initialize sliders
 async function initializeSliders() {
     try {
-        // Use top rated movies for the trending section
-        const topRatedMovies = await fetchMovies("/movie/top_rated")
+        // Fetch trending movies for the trending section
+        const trendingMovies = await fetchMovies("/trending/movie/day")
         const trendingSlider = document.getElementById("trendingMovies")
-        if (trendingSlider && topRatedMovies && topRatedMovies.length > 0) {
+        if (trendingSlider && trendingMovies && trendingMovies.length > 0) {
             // Clear any existing content
             trendingSlider.innerHTML = ""
-            topRatedMovies.forEach((movie) => {
+            trendingMovies.forEach((movie) => {
                 trendingSlider.appendChild(createMovieCard(movie))
             })
         } else {
-            console.error("Trending slider not found or no top rated movies returned")
+            console.error("Trending slider not found or no trending movies returned")
         }
 
         // Fetch popular movies
@@ -2615,6 +2824,19 @@ function initializeSmoothScrolling() {
 
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
+    // Show name modal if user hasn't entered their name
+    showNameModal()
+    
+    // Name save button
+    saveNameBtn.addEventListener('click', saveUserName)
+    
+    // Allow pressing Enter to save name
+    userNameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            saveUserName()
+        }
+    })
+    
     // Initialize theme
     initTheme()
     
