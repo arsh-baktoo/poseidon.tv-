@@ -420,9 +420,9 @@
     :root {
     --background-color: #0f1117;
     --text-color: #ffffff;
-    --accent-color: #00c6ff;
+    --accent-color: #ff0000;
     --overlay-color: rgba(0, 0, 0, 0.7);
-    --primary-color: #00c6ff;
+    --primary-color: #ff0000;
     --secondary-color: #1e2130;
     --navbar-bg: rgba(0, 0, 0, 0);
     --card-bg: rgba(30, 33, 48, 0.8);
@@ -432,8 +432,8 @@
     --light-secondary: #e1e1e6;
     --light-card: #ffffff;
     --light-modal: #ffffff;
-    --light-primary: #00c6ff;
-    --gradient-primary: linear-gradient(45deg, #00c6ff, #0072ff);
+    --light-primary: #ff0000;
+    --gradient-primary: linear-gradient(45deg, #ff0000, #ff3333);
 }
 
 html[data-theme="light"] {
@@ -484,12 +484,12 @@ body {
 
 @font-face {
     font-family: "The Next Font";
-    src: url('C:\Users\Arsh\Desktop\WEBSITE DESIGN\TheNextFont.ttf') format('opentype');
+    src: url('./fonts/TheNextFont.ttf') format('truetype');
 }
 
 @font-face {
     font-family: "Coolvetica Rg";
-    src: url('C:\Users\Arsh\Desktop\WEBSITE DESIGN\coolvetica rg.otf') format('opentype');
+    src: url('./fonts/coolvetica-rg.otf') format('opentype');
 }
 
 /* Name Modal Styles */
@@ -568,7 +568,7 @@ body {
 
 .name-input-container .apply-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
 }
 
 /* Page Styles */
@@ -799,7 +799,7 @@ body {
 
 .preferences-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
 }
 
 .user-profile {
@@ -819,7 +819,7 @@ body {
 
 .user-profile:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
 .user-initials {
@@ -892,7 +892,7 @@ body {
 
 .mood-option.selected {
     border-color: var(--primary-color);
-    background-color: rgba(0, 198, 255, 0.1);
+    background-color: rgba(255, 0, 0, 0.1);
 }
 
 .mood-emoji {
@@ -952,7 +952,7 @@ body {
 
 .apply-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
 }
 
 /* Hero Section Styles */
@@ -1038,10 +1038,10 @@ body {
 }
 
 .watch-btn:hover {
-    background: linear-gradient(45deg, #0072ff, #00c6ff);
+    background: linear-gradient(45deg, #ff3333, #ff0000);
     color: white;
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.5);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
 }
 
 .watch-btn i {
@@ -1160,7 +1160,7 @@ body {
 .movie-card:hover {
     transform: scale(1.05);
     z-index: 10;
-    box-shadow: 0 8px 25px rgba(0, 198, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
 }
 
 .movie-card::after {
@@ -1618,7 +1618,7 @@ body {
 .social-icons a:hover {
     background: var(--gradient-primary);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
 }
 
 .footer-bottom {
@@ -2920,4 +2920,4 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 </script>
 </body>
-</html>
+</html> 
