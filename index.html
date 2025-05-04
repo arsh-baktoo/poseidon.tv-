@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,17 +12,24 @@
         <div class="navbar-container">
             <div class="logo">POSEIDON<span>.tv</span></div>
             <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="#">Movies</a>
-                <a href="#">TV Shows</a>
-                <a href="#">New Releases</a>
-                <a href="#">My List</a>
+                <a href="#" data-page="home" class="nav-link active">Home</a>
+                <a href="#" data-page="movies" class="nav-link">Movies</a>
+                <a href="#" data-page="tvshows" class="nav-link">TV Shows</a>
+                <a href="#" data-page="newreleases" class="nav-link">New Releases</a>
+                <a href="#" id="bookmarksLink">My Bookmarks</a>
             </div>
             <div class="nav-actions">
                 <div class="search-box">
-                    <input type="text" placeholder="Search...">
+                    <input type="text" id="searchInput" placeholder="Search...">
                     <i class="fas fa-search"></i>
+                    <div class="search-results" id="searchResults"></div>
                 </div>
+                <div class="theme-toggle">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </div>
+                <button id="preferencesBtn" class="preferences-btn">
+                    <i class="fas fa-sliders-h"></i> Preferences
+                </button>
                 <div class="user-profile">
                     <img src="https://ui-avatars.com/api/?name=User&background=ff0000&color=fff&rounded=true&bold=true" alt="User Profile">
                 </div>
@@ -30,60 +37,318 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="hero-content">
-            <div class="badges">
-                <span class="badge">NOW TRENDING</span>
-                <span class="badge">IMDB</span>
+    <!-- Home Page -->
+    <div class="page" id="homePage">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="badges">
+                    <span class="badge">NOW TRENDING</span>
+                    <span class="badge">IMDB</span>
+                </div>
+                <div class="hero-title"></div>
+                <br>
+                <div class="hero-description"></div>
+                <br>
+                <div class="hero-actions">
+                    <button class="watch-btn">WATCH NOW <i class="fas fa-play-circle"></i></button>
+                    <button class="bookmark-btn" id="heroBookmarkBtn"><i class="far fa-bookmark"></i> Bookmark</button>
+                </div>
             </div>
-            <div class="hero-title"></div>
-            <br>
-            <div class="hero-description"></div>
-            <br>
-            <button class="watch-btn">WATCH NOW <i class="fas fa-play-circle"></i></button>
+        </div>
+
+        <!-- Mood-Based Recommendations Section -->
+        <div class="movies-section" id="moodBasedSection" style="display: none;">
+            <div class="section-header">
+                <h2 id="moodBasedTitle">Based on your mood</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="moodBasedMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- Trending Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Now trending</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="trendingMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- Popular Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Popular movies</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="popularMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- Top Rated Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Top Rated</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="topRatedMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- Bookmarked Movies Section -->
+        <div class="movies-section" id="bookmarkedSection" style="display: none;">
+            <div class="section-header">
+                <h2>Your Bookmarks</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="bookmarkedMovies">
+                <!-- Bookmarked movies will be populated here -->
+            </div>
         </div>
     </div>
 
-    <!-- Trending Movies Section -->
-    <div class="movies-section">
-        <div class="section-header">
-            <h2>Now trending</h2>
-            <div class="slider-controls">
-                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+    <!-- Movies Page -->
+    <div class="page" id="moviesPage" style="display: none;">
+        <div class="page-header">
+            <h1>Movies</h1>
+            <p>Discover the best movies across all genres</p>
+        </div>
+
+        <!-- Action Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Action Movies</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="actionMovies">
+                <!-- Movies will be populated here -->
             </div>
         </div>
-        <div class="movie-slider" id="trendingMovies">
-            <!-- Movies will be populated here -->
+
+        <!-- Comedy Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Comedy Movies</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="comedyMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- Drama Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Drama Movies</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="dramaMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- Sci-Fi Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Sci-Fi Movies</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="scifiMovies">
+                <!-- Movies will be populated here -->
+            </div>
         </div>
     </div>
 
-    <!-- Popular Movies Section -->
-    <div class="movies-section">
-        <div class="section-header">
-            <h2>Popular movies</h2>
-            <div class="slider-controls">
-                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+    <!-- TV Shows Page -->
+    <div class="page" id="tvshowsPage" style="display: none;">
+        <div class="page-header">
+            <h1>TV Shows</h1>
+            <p>Discover the best TV shows to binge-watch</p>
+        </div>
+
+        <!-- Popular TV Shows Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Popular TV Shows</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="popularTVShows">
+                <!-- TV Shows will be populated here -->
             </div>
         </div>
-        <div class="movie-slider" id="popularMovies">
-            <!-- Movies will be populated here -->
+
+        <!-- Top Rated TV Shows Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Top Rated TV Shows</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="topRatedTVShows">
+                <!-- TV Shows will be populated here -->
+            </div>
+        </div>
+
+        <!-- On Air TV Shows Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Currently On Air</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="onAirTVShows">
+                <!-- TV Shows will be populated here -->
+            </div>
         </div>
     </div>
 
-    <!-- Top Rated Movies Section -->
-    <div class="movies-section">
-        <div class="section-header">
-            <h2>Top Rated</h2>
-            <div class="slider-controls">
-                <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+    <!-- New Releases Page -->
+    <div class="page" id="newreleasesPage" style="display: none;">
+        <div class="page-header">
+            <h1>New Releases</h1>
+            <p>The latest movies and TV shows just for you</p>
+        </div>
+
+        <!-- Now Playing Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Now Playing in Theaters</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="nowPlayingMovies">
+                <!-- Movies will be populated here -->
             </div>
         </div>
-        <div class="movie-slider" id="topRatedMovies">
-            <!-- Movies will be populated here -->
+
+        <!-- Upcoming Movies Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>Upcoming Movies</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="upcomingMovies">
+                <!-- Movies will be populated here -->
+            </div>
+        </div>
+
+        <!-- New TV Shows Section -->
+        <div class="movies-section">
+            <div class="section-header">
+                <h2>New TV Shows</h2>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-arrow next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="movie-slider" id="newTVShows">
+                <!-- TV Shows will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mood & Genre Selector (Hidden by default) -->
+    <div class="mood-selector" id="moodSelector">
+        <div class="close-preferences">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="mood-container">
+            <h2>What's your mood today?</h2>
+            <div class="mood-options">
+                <div class="mood-option" data-mood="happy">
+                    <div class="mood-emoji">😊</div>
+                    <span>Happy</span>
+                </div>
+                <div class="mood-option" data-mood="sad">
+                    <div class="mood-emoji">😢</div>
+                    <span>Sad</span>
+                </div>
+                <div class="mood-option" data-mood="excited">
+                    <div class="mood-emoji">🤩</div>
+                    <span>Excited</span>
+                </div>
+            </div>
+            <div class="genre-selector">
+                <h3>Select your preferred genres:</h3>
+                <div class="genre-options">
+                    <label class="genre-option">
+                        <input type="checkbox" value="28" name="genre"> Action
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="12" name="genre"> Adventure
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="16" name="genre"> Animation
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="35" name="genre"> Comedy
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="80" name="genre"> Crime
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="18" name="genre"> Drama
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="14" name="genre"> Fantasy
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="27" name="genre"> Horror
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="10749" name="genre"> Romance
+                    </label>
+                    <label class="genre-option">
+                        <input type="checkbox" value="878" name="genre"> Sci-Fi
+                    </label>
+                </div>
+                <button id="applyPreferences" class="apply-btn">Apply Preferences</button>
+            </div>
         </div>
     </div>
 
@@ -107,10 +372,10 @@
             <div class="footer-links">
                 <div class="footer-column">
                     <h3>Navigation</h3>
-                    <a href="#">Home</a>
-                    <a href="#">Movies</a>
-                    <a href="#">TV Shows</a>
-                    <a href="#">New Releases</a>
+                    <a href="#" data-page="home" class="footer-nav-link">Home</a>
+                    <a href="#" data-page="movies" class="footer-nav-link">Movies</a>
+                    <a href="#" data-page="tvshows" class="footer-nav-link">TV Shows</a>
+                    <a href="#" data-page="newreleases" class="footer-nav-link">New Releases</a>
                 </div>
                 <div class="footer-column">
                     <h3>Legal</h3>
@@ -128,10 +393,9 @@
             <div class="footer-social">
                 <h3>Follow Us</h3>
                 <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="https://x.com/MostSavageBoy"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/arshbaktoo/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtu.be/xvFZjo5PgG0?feature=shared"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
@@ -150,6 +414,22 @@
     --navbar-bg: rgba(15, 17, 23, 0);
     --card-bg: rgba(30, 33, 48, 0.8);
     --modal-bg: #1a1c25;
+    --light-bg: #f5f5f7;
+    --light-text: #333333;
+    --light-secondary: #e1e1e6;
+    --light-card: #ffffff;
+    --light-modal: #ffffff;
+    --light-primary: #ff0000;
+}
+
+html[data-theme="light"] {
+    --background-color: var(--light-bg);
+    --text-color: var(--light-text);
+    --secondary-color: var(--light-secondary);
+    --card-bg: var(--light-card);
+    --modal-bg: var(--light-modal);
+    --primary-color: var(--light-primary);
+    --navbar-bg: rgba(245, 245, 247, 0.8);
 }
 
 * {
@@ -163,8 +443,9 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     direction: ltr;
-    font-family: 'The Next Font';
+    font-family: 'The Next Font', Arial, sans-serif;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @font-face {
@@ -177,6 +458,29 @@ body {
     src: url('C:\Users\Arsh\Desktop\WEBSITE DESIGN\coolvetica rg.otf') format('opentype');
 }
 
+/* Page Styles */
+.page {
+    padding-top: 80px;
+}
+
+.page-header {
+    text-align: center;
+    padding: 60px 5% 30px;
+    background-color: var(--secondary-color);
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+}
 
 /* Navbar Styles */
 .navbar {
@@ -185,7 +489,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background-color: transparent; /* Removed background */
+    background-color: var(--navbar-bg);
     backdrop-filter: blur(10px);
     transition: background-color 0.3s ease;
     padding: 15px 0;
@@ -272,12 +576,235 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    margin-top: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+.search-results.active {
+    display: block;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-result-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-poster {
+    width: 50px;
+    height: 75px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.search-result-info {
+    flex: 1;
+}
+
+.search-result-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.search-result-year {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.search-result-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: #ffd700;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.preferences-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+
+.preferences-btn:hover {
+    background-color: #ff3333;
+    transform: translateY(-2px);
+}
+
 .user-profile img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid var(--primary-color);
+}
+
+/* Mood Selector Styles */
+.mood-selector {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--card-bg);
+    padding: 30px 5%;
+    z-index: 999;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.mood-selector.active {
+    transform: translateY(0);
+}
+
+.close-preferences {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-preferences:hover {
+    color: var(--primary-color);
+}
+
+.mood-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.mood-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.mood-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+}
+
+.mood-option:hover {
+    transform: translateY(-5px);
+}
+
+.mood-option.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.mood-emoji {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.genre-selector {
+    margin-top: 20px;
+}
+
+.genre-selector h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.genre-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.genre-option {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.genre-option:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.genre-option input {
+    margin-right: 5px;
+}
+
+.apply-btn {
+    display: block;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.apply-btn:hover {
+    background-color: #ff3333;
+    transform: translateY(-3px);
 }
 
 /* Hero Section Styles */
@@ -312,9 +839,9 @@ body {
 }
 
 .badges {
-    margin-bottom: 2rem; /* Increased margin to move badges down */
+    margin-bottom: 2rem;
     display: flex;
-    margin-top: 2rem; /* Added margin-top to move badges down */
+    margin-top: 2rem;
 }
 
 .badge {
@@ -341,6 +868,11 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
+.hero-actions {
+    display: flex;
+    gap: 15px;
+}
+
 .watch-btn {
     background-color: var(--primary-color);
     color: var(--text-color);
@@ -353,7 +885,6 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    
 }
 
 .watch-btn:hover {
@@ -365,6 +896,29 @@ body {
 
 .watch-btn i {
     font-size: 1.2rem;
+}
+
+.bookmark-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bookmark-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.bookmark-btn i.fas {
+    color: var(--primary-color);
 }
 
 /* Movies Section Styles */
@@ -518,6 +1072,32 @@ body {
 
 .movie-rating i {
     font-size: 0.7rem;
+}
+
+.bookmark-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.3s;
+}
+
+.bookmark-icon:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.bookmark-icon.active i {
+    color: var(--primary-color);
 }
 
 /* Modal Styles */
@@ -1010,6 +1590,15 @@ body {
     .movie-detail-actions {
         flex-direction: column;
     }
+
+    .mood-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .genre-options {
+        gap: 10px;
+    }
 }
 </style>
 <script>
@@ -1025,134 +1614,629 @@ const closeModal = document.querySelector(".close-modal")
 const modalBody = document.querySelector(".modal-body")
 const navbar = document.querySelector(".navbar")
 const heroSection = document.querySelector(".hero-section")
-// Fix the hero section title element selection
 const heroTitle = document.querySelector(".hero-title")
 const heroDescription = document.querySelector(".hero-description")
 const watchBtn = document.querySelector(".watch-btn")
+const themeIcon = document.getElementById("themeIcon")
+const moodOptions = document.querySelectorAll(".mood-option")
+const applyPreferencesBtn = document.getElementById("applyPreferences")
+const moodBasedSection = document.getElementById("moodBasedSection")
+const moodBasedTitle = document.getElementById("moodBasedTitle")
+const moodBasedMovies = document.getElementById("moodBasedMovies")
+const bookmarkedSection = document.getElementById("bookmarkedSection")
+const bookmarkedMovies = document.getElementById("bookmarkedMovies")
+const bookmarksLink = document.getElementById("bookmarksLink")
+const heroBookmarkBtn = document.getElementById("heroBookmarkBtn")
+const preferencesBtn = document.getElementById("preferencesBtn")
+const moodSelector = document.getElementById("moodSelector")
+const closePreferences = document.querySelector(".close-preferences")
+const searchInput = document.getElementById("searchInput")
+const searchResults = document.getElementById("searchResults")
+const navLinks = document.querySelectorAll(".nav-link")
+const footerNavLinks = document.querySelectorAll(".footer-nav-link")
+const pages = document.querySelectorAll(".page")
+
+// State variables
+let currentMood = null
+let selectedGenres = []
+let currentHeroMovie = null
+let bookmarkedMoviesData = JSON.parse(localStorage.getItem('bookmarkedMovies')) || []
+let currentPage = "home"
+let searchTimeout = null
+
+// Theme toggle functionality
+function toggleTheme() {
+    const html = document.documentElement
+    const currentTheme = html.getAttribute('data-theme')
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+    
+    html.setAttribute('data-theme', newTheme)
+    
+    // Update icon
+    if (newTheme === 'dark') {
+        themeIcon.classList.remove('fa-sun')
+        themeIcon.classList.add('fa-moon')
+    } else {
+        themeIcon.classList.remove('fa-moon')
+        themeIcon.classList.add('fa-sun')
+    }
+    
+    // Save preference
+    localStorage.setItem('theme', newTheme)
+}
+
+// Initialize theme from localStorage
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme)
+        if (savedTheme === 'light') {
+            themeIcon.classList.remove('fa-moon')
+            themeIcon.classList.add('fa-sun')
+        }
+    }
+}
+
+// Toggle preferences panel
+function togglePreferences() {
+    moodSelector.classList.toggle('active')
+}
+
+// Navigation functionality
+function navigateTo(page) {
+    // Hide all pages
+    pages.forEach(p => {
+        p.style.display = 'none'
+    })
+    
+    // Show selected page
+    document.getElementById(`${page}Page`).style.display = 'block'
+    
+    // Update active nav link
+    navLinks.forEach(link => {
+        link.classList.remove('active')
+        if (link.dataset.page === page) {
+            link.classList.add('active')
+        }
+    })
+    
+    // Update current page
+    currentPage = page
+    
+    // Scroll to top
+    window.scrollTo(0, 0)
+    
+    // Load page-specific content if needed
+    if (page === 'movies' && document.getElementById('actionMovies').children.length === 0) {
+        loadMoviesPageContent()
+    } else if (page === 'tvshows' && document.getElementById('popularTVShows').children.length === 0) {
+        loadTVShowsPageContent()
+    } else if (page === 'newreleases' && document.getElementById('nowPlayingMovies').children.length === 0) {
+        loadNewReleasesPageContent()
+    }
+}
+
+// Load Movies page content
+async function loadMoviesPageContent() {
+    try {
+        // Load Action Movies
+        const actionMovies = await fetchMoviesByGenre(['28'])
+        populateMovieSlider('actionMovies', actionMovies)
+        
+        // Load Comedy Movies
+        const comedyMovies = await fetchMoviesByGenre(['35'])
+        populateMovieSlider('comedyMovies', comedyMovies)
+        
+        // Load Drama Movies
+        const dramaMovies = await fetchMoviesByGenre(['18'])
+        populateMovieSlider('dramaMovies', dramaMovies)
+        
+        // Load Sci-Fi Movies
+        const scifiMovies = await fetchMoviesByGenre(['878'])
+        populateMovieSlider('scifiMovies', scifiMovies)
+    } catch (error) {
+        console.error("Error loading Movies page content:", error)
+    }
+}
+
+// Load TV Shows page content
+async function loadTVShowsPageContent() {
+    try {
+        // Load Popular TV Shows
+        const popularTVShows = await fetchTVShows('/tv/popular')
+        populateTVShowSlider('popularTVShows', popularTVShows)
+        
+        // Load Top Rated TV Shows
+        const topRatedTVShows = await fetchTVShows('/tv/top_rated')
+        populateTVShowSlider('topRatedTVShows', topRatedTVShows)
+        
+        // Load On Air TV Shows
+        const onAirTVShows = await fetchTVShows('/tv/on_the_air')
+        populateTVShowSlider('onAirTVShows', onAirTVShows)
+    } catch (error) {
+        console.error("Error loading TV Shows page content:", error)
+    }
+}
+
+// Load New Releases page content
+async function loadNewReleasesPageContent() {
+    try {
+        // Load Now Playing Movies
+        const nowPlayingMovies = await fetchMovies('/movie/now_playing')
+        populateMovieSlider('nowPlayingMovies', nowPlayingMovies)
+        
+        // Load Upcoming Movies
+        const upcomingMovies = await fetchMovies('/movie/upcoming')
+        populateMovieSlider('upcomingMovies', upcomingMovies)
+        
+        // Load New TV Shows (using airing today as a proxy for "new")
+        const newTVShows = await fetchTVShows('/tv/airing_today')
+        populateTVShowSlider('newTVShows', newTVShows)
+    } catch (error) {
+        console.error("Error loading New Releases page content:", error)
+    }
+}
+
+// Populate movie slider with data
+function populateMovieSlider(sliderId, movies) {
+    const slider = document.getElementById(sliderId)
+    if (!slider) return
+    
+    slider.innerHTML = ''
+    
+    if (movies && movies.length > 0) {
+        movies.forEach(movie => {
+            slider.appendChild(createMovieCard(movie))
+        })
+    } else {
+        slider.innerHTML = '<p class="no-results">No movies found.</p>'
+    }
+}
+
+// Populate TV show slider with data
+function populateTVShowSlider(sliderId, shows) {
+    const slider = document.getElementById(sliderId)
+    if (!slider) return
+    
+    slider.innerHTML = ''
+    
+    if (shows && shows.length > 0) {
+        shows.forEach(show => {
+            slider.appendChild(createTVShowCard(show))
+        })
+    } else {
+        slider.innerHTML = '<p class="no-results">No TV shows found.</p>'
+    }
+}
+
+// Create TV show card element
+function createTVShowCard(show) {
+    const showCard = document.createElement("div")
+    showCard.className = "movie-card"
+    showCard.dataset.id = show.id
+    showCard.dataset.type = "tv"
+
+    const rating = show.vote_average ? show.vote_average.toFixed(1) : "N/A"
+
+    showCard.innerHTML = `
+        <div class="movie-rating">
+            <i class="fas fa-star"></i> ${rating}
+        </div>
+        <img src="${show.poster_path ? IMAGE_BASE_URL + show.poster_path : "/placeholder.svg?height=300&width=200"}" 
+             alt="${show.name}" 
+             class="movie-poster">
+        <h3 class="movie-title">${show.name}</h3>
+    `
+
+    // Add click event to open modal with TV show details
+    showCard.addEventListener("click", () => {
+        openTVShowDetails(show.id)
+    })
+
+    return showCard
+}
+
+// Fetch TV shows from TMDB API
+async function fetchTVShows(endpoint) {
+    try {
+        console.log(`Fetching TV shows from: ${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US`)
+        const response = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US`)
+
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status} - ${response.statusText}`)
+        }
+
+        const data = await response.json()
+
+        if (!data || !data.results || !Array.isArray(data.results)) {
+            console.error("Invalid data format received:", data)
+            return []
+        }
+
+        console.log(`Successfully fetched ${data.results.length} TV shows from ${endpoint}`)
+        return data.results
+    } catch (error) {
+        console.error(`Error fetching TV shows from ${endpoint}:`, error)
+        return []
+    }
+}
+
+// Fetch TV show details from TMDB API
+async function fetchTVShowDetails(showId) {
+    try {
+        const response = await fetch(
+            `${BASE_URL}/tv/${showId}?api_key=${API_KEY}&language=en-US&append_to_response=credits,videos`,
+        )
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`)
+        }
+        return await response.json()
+    } catch (error) {
+        console.error(`Error fetching TV show details for ID ${showId}:`, error)
+        return null
+    }
+}
+
+// Open TV show details modal
+async function openTVShowDetails(showId) {
+    const showDetails = await fetchTVShowDetails(showId)
+    if (!showDetails) return
+
+    const firstAirYear = showDetails.first_air_date ? new Date(showDetails.first_air_date).getFullYear() : ""
+    const genres = showDetails.genres.map((genre) => genre.name).join(", ")
+    const creators = showDetails.created_by.map((creator) => creator.name).join(", ")
+    const trailer = showDetails.videos?.results.find((video) => video.type === "Trailer" && video.site === "YouTube")
+
+    modalBody.innerHTML = `
+        <div class="movie-detail-header" style="background-image: url('${showDetails.backdrop_path ? BACKDROP_BASE_URL + showDetails.backdrop_path : ""}')">
+            <div class="movie-detail-info">
+                <img src="${showDetails.poster_path ? IMAGE_BASE_URL + showDetails.poster_path : "/placeholder.svg?height=300&width=200"}" 
+                     alt="${showDetails.name}" 
+                     class="movie-detail-
+                     alt="${showDetails.name}" 
+                     class="movie-detail-poster">
+                <div class="movie-detail-text">
+                    <h2 class="movie-detail-title">${showDetails.name} ${firstAirYear ? `(${firstAirYear})` : ""}</h2>
+                    <div class="movie-detail-meta">
+                        <span><i class="fas fa-calendar"></i> ${showDetails.first_air_date || "N/A"}</span>
+                        <span><i class="fas fa-film"></i> ${genres}</span>
+                        <span><i class="fas fa-list"></i> ${showDetails.number_of_seasons} Season${showDetails.number_of_seasons !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="movie-detail-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span>${showDetails.vote_average.toFixed(1)}/10</span>
+                        <span>(${showDetails.vote_count} votes)</span>
+                    </div>
+                    <p class="movie-detail-overview">${showDetails.overview}</p>
+                    <div class="movie-detail-actions">
+                        ${trailer ? `<a href="https://www.youtube.com/watch?v=${trailer.key}" target="_blank" class="btn btn-primary"><i class="fas fa-play"></i> Watch Trailer</a>` : ""}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="movie-detail-content">
+            <div class="movie-detail-section">
+                <h3>Cast</h3>
+                <div class="cast-list">
+                    ${showDetails.credits.cast
+                      .slice(0, 10)
+                      .map(
+                        (actor) => `
+                        <div class="cast-item">
+                            <img src="${actor.profile_path ? "https://image.tmdb.org/t/p/w185" + actor.profile_path : "/placeholder.svg?height=80&width=80"}" 
+                                 alt="${actor.name}" 
+                                 class="cast-avatar">
+                            <div class="cast-name">${actor.name}</div>
+                            <div class="cast-character">${actor.character}</div>
+                        </div>
+                    `,
+                      )
+                      .join("")}
+                </div>
+            </div>
+            <div class="movie-detail-section">
+                <h3>Details</h3>
+                <p><strong>Created By:</strong> ${creators || "N/A"}</p>
+                <p><strong>Status:</strong> ${showDetails.status}</p>
+                <p><strong>Network:</strong> ${showDetails.networks.map(n => n.name).join(', ') || "N/A"}</p>
+                <p><strong>Episodes:</strong> ${showDetails.number_of_episodes}</p>
+                <p><strong>Original Language:</strong> ${showDetails.original_language?.toUpperCase() || "N/A"}</p>
+            </div>
+        </div>
+    `
+
+    modal.style.display = "block"
+    document.body.style.overflow = "hidden"
+}
+
+// Search functionality
+function setupSearch() {
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim()
+        
+        // Clear previous timeout
+        if (searchTimeout) {
+            clearTimeout(searchTimeout)
+        }
+        
+        if (query.length < 2) {
+            searchResults.classList.remove('active')
+            searchResults.innerHTML = ''
+            return
+        }
+        
+        // Set a timeout to avoid making too many requests while typing
+        searchTimeout = setTimeout(() => {
+            searchMovies(query)
+        }, 500)
+    })
+    
+    // Close search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.remove('active')
+        }
+    })
+}
+
+// Search for movies
+async function searchMovies(query) {
+    try {
+        const response = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1&include_adult=false`)
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`)
+        }
+        
+        const data = await response.json()
+        displaySearchResults(data.results)
+    } catch (error) {
+        console.error('Error searching:', error)
+    }
+}
+
+// Display search results
+function displaySearchResults(results) {
+    searchResults.innerHTML = ''
+    
+    if (!results || results.length === 0) {
+        searchResults.innerHTML = '<div class="search-result-item">No results found</div>'
+        searchResults.classList.add('active')
+        return
+    }
+    
+    // Filter out results without images and limit to 5
+    const filteredResults = results
+        .filter(item => (item.media_type === 'movie' || item.media_type === 'tv') && item.poster_path)
+        .slice(0, 5)
+    
+    filteredResults.forEach(item => {
+        const resultItem = document.createElement('div')
+        resultItem.className = 'search-result-item'
+        
+        const title = item.media_type === 'movie' ? item.title : item.name
+        const year = item.media_type === 'movie' 
+            ? (item.release_date ? new Date(item.release_date).getFullYear() : '') 
+            : (item.first_air_date ? new Date(item.first_air_date).getFullYear() : '')
+        
+        resultItem.innerHTML = `
+            <img src="${IMAGE_BASE_URL + item.poster_path}" alt="${title}" class="search-result-poster">
+            <div class="search-result-info">
+                <div class="search-result-title">${title}</div>
+                <div class="search-result-year">${year} • ${item.media_type === 'movie' ? 'Movie' : 'TV Show'}</div>
+                <div class="search-result-rating">
+                    <i class="fas fa-star"></i> ${item.vote_average.toFixed(1)}
+                </div>
+            </div>
+        `
+        
+        // Add click event to open details
+        resultItem.addEventListener('click', () => {
+            if (item.media_type === 'movie') {
+                openMovieDetails(item.id)
+            } else if (item.media_type === 'tv') {
+                openTVShowDetails(item.id)
+            }
+            
+            // Clear search
+            searchInput.value = ''
+            searchResults.classList.remove('active')
+        })
+        
+        searchResults.appendChild(resultItem)
+    })
+    
+    searchResults.classList.add('active')
+}
+
+// Mood selection functionality
+function selectMood(mood) {
+    // Remove selected class from all options
+    moodOptions.forEach(option => {
+        option.classList.remove('selected')
+    })
+    
+    // Add selected class to clicked option
+    const selectedOption = document.querySelector(`.mood-option[data-mood="${mood}"]`)
+    if (selectedOption) {
+        selectedOption.classList.add('selected')
+        currentMood = mood
+    }
+}
+
+// Get selected genres
+function getSelectedGenres() {
+    const checkboxes = document.querySelectorAll('input[name="genre"]:checked')
+    return Array.from(checkboxes).map(checkbox => checkbox.value)
+}
 
 // Fetch movies from TMDB API
-// Improve the fetchMovies function with better error handling
 async function fetchMovies(endpoint) {
-  try {
-    console.log(`Fetching movies from: ${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US`)
-    const response = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US`)
+    try {
+        console.log(`Fetching movies from: ${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US`)
+        const response = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US`)
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} - ${response.statusText}`)
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status} - ${response.statusText}`)
+        }
+
+        const data = await response.json()
+
+        if (!data || !data.results || !Array.isArray(data.results)) {
+            console.error("Invalid data format received:", data)
+            return []
+        }
+
+        console.log(`Successfully fetched ${data.results.length} movies from ${endpoint}`)
+        return data.results
+    } catch (error) {
+        console.error(`Error fetching movies from ${endpoint}:`, error)
+        return []
     }
+}
 
-    const data = await response.json()
-
-    if (!data || !data.results || !Array.isArray(data.results)) {
-      console.error("Invalid data format received:", data)
-      return []
+// Fetch movies by genre
+async function fetchMoviesByGenre(genreIds) {
+    try {
+        if (!genreIds || genreIds.length === 0) return []
+        
+        const genreParam = genreIds.join('|')
+        const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreParam}&language=en-US&sort_by=popularity.desc`)
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`)
+        }
+        
+        const data = await response.json()
+        return data.results || []
+    } catch (error) {
+        console.error(`Error fetching movies by genre:`, error)
+        return []
     }
-
-    console.log(`Successfully fetched ${data.results.length} movies from ${endpoint}`)
-    return data.results
-  } catch (error) {
-    console.error(`Error fetching movies from ${endpoint}:`, error)
-    return []
-  }
 }
 
 // Fetch movie details from TMDB API
 async function fetchMovieDetails(movieId) {
-  try {
-    const response = await fetch(
-      `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US&append_to_response=credits,videos`,
-    )
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`)
+    try {
+        const response = await fetch(
+            `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US&append_to_response=credits,videos`,
+        )
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`)
+        }
+        return await response.json()
+    } catch (error) {
+        console.error(`Error fetching movie details for ID ${movieId}:`, error)
+        return null
     }
-    return await response.json()
-  } catch (error) {
-    console.error(`Error fetching movie details for ID ${movieId}:`, error)
-    return null
-  }
 }
 
 // Fetch movie videos (trailers)
 async function fetchMovieVideos(movieId) {
-  try {
-    const response = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`)
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`)
+    try {
+        const response = await fetch(`${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`)
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`)
+        }
+        const data = await response.json()
+        return data.results
+    } catch (error) {
+        console.error(`Error fetching videos for movie ID ${movieId}:`, error)
+        return []
     }
-    const data = await response.json()
-    return data.results
-  } catch (error) {
-    console.error(`Error fetching videos for movie ID ${movieId}:`, error)
-    return []
-  }
 }
 
 // Update hero section with now playing movie
 async function updateHeroSection() {
-  try {
-    // Changed from trending to now_playing
-    const nowPlayingMovies = await fetchMovies("/movie/now_playing")
-    if (nowPlayingMovies && nowPlayingMovies.length > 0) {
-      const featuredMovie = nowPlayingMovies[0] // Get the first now playing movie
+    try {
+        // Changed from trending to now_playing
+        const nowPlayingMovies = await fetchMovies("/movie/now_playing")
+        if (nowPlayingMovies && nowPlayingMovies.length > 0) {
+            const featuredMovie = nowPlayingMovies[0] // Get the first now playing movie
+            currentHeroMovie = featuredMovie
 
-      // Update hero background
-      if (featuredMovie.backdrop_path) {
-        heroSection.style.backgroundImage = `url('${BACKDROP_BASE_URL}${featuredMovie.backdrop_path}')`
-      }
+            // Update hero background
+            if (featuredMovie.backdrop_path) {
+                heroSection.style.backgroundImage = `url('${BACKDROP_BASE_URL}${featuredMovie.backdrop_path}')`
+            }
 
-      // Update hero content
-      heroTitle.textContent = featuredMovie.title
-      heroDescription.textContent = featuredMovie.overview
+            // Update hero content
+            heroTitle.innerHTML = `<h1>${featuredMovie.title}</h1>`
+            heroDescription.textContent = featuredMovie.overview
 
-      // Change button text to "WATCH TRAILER"
-      if (watchBtn) {
-        watchBtn.innerHTML = 'WATCH TRAILER <i class="fas fa-play-circle"></i>'
+            // Update bookmark button state
+            updateHeroBookmarkButton()
 
-        // Remove any existing event listeners by cloning and replacing
-        const newWatchBtn = watchBtn.cloneNode(true)
-        watchBtn.parentNode.replaceChild(newWatchBtn, watchBtn)
+            // Change button text to "WATCH TRAILER"
+            if (watchBtn) {
+                watchBtn.innerHTML = 'WATCH TRAILER <i class="fas fa-play-circle"></i>'
 
-        // Add click event to open trailer
-        newWatchBtn.addEventListener("click", async () => {
-          const videos = await fetchMovieVideos(featuredMovie.id)
-          const trailer = videos.find(
-            (video) => (video.type === "Trailer" || video.type === "Teaser") && video.site === "YouTube",
-          )
+                // Remove any existing event listeners by cloning and replacing
+                const newWatchBtn = watchBtn.cloneNode(true)
+                watchBtn.parentNode.replaceChild(newWatchBtn, watchBtn)
 
-          if (trailer) {
-            // Open YouTube trailer in a new tab
-            window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")
-          } else {
-            // If no trailer is found, open movie details
-            openMovieDetails(featuredMovie.id)
-          }
-        })
-      }
-    } else {
-      console.error("No now playing movies found or empty response")
-      // Fallback content
-      heroTitle.textContent = "Welcome to Poseidon.tv"
-      heroDescription.textContent = "Discover the best movies and TV shows all in one place."
+                // Add click event to open trailer
+                newWatchBtn.addEventListener("click", async () => {
+                    const videos = await fetchMovieVideos(featuredMovie.id)
+                    const trailer = videos.find(
+                        (video) => (video.type === "Trailer" || video.type === "Teaser") && video.site === "YouTube",
+                    )
+
+                    if (trailer) {
+                        // Open YouTube trailer in a new tab
+                        window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank")
+                    } else {
+                        // If no trailer is found, open movie details
+                        openMovieDetails(featuredMovie.id)
+                    }
+                })
+            }
+        } else {
+            console.error("No now playing movies found or empty response")
+            // Fallback content
+            heroTitle.innerHTML = "<h1>Welcome to Poseidon.tv</h1>"
+            heroDescription.textContent = "Discover the best movies and TV shows all in one place."
+        }
+    } catch (error) {
+        console.error("Error updating hero section:", error)
+        // Fallback content
+        heroTitle.innerHTML = "<h1>Welcome to Poseidon.tv</h1>"
+        heroDescription.textContent = "Discover the best movies and TV shows all in one place."
     }
-  } catch (error) {
-    console.error("Error updating hero section:", error)
-    // Fallback content
-    heroTitle.textContent = "Welcome to Poseidon.tv"
-    heroDescription.textContent = "Discover the best movies and TV shows all in one place."
-  }
+}
+
+// Update hero bookmark button state
+function updateHeroBookmarkButton() {
+    if (!currentHeroMovie) return
+    
+    const isBookmarked = bookmarkedMoviesData.some(movie => movie.id === currentHeroMovie.id)
+    
+    if (isBookmarked) {
+        heroBookmarkBtn.innerHTML = '<i class="fas fa-bookmark"></i> Bookmarked'
+    } else {
+        heroBookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i> Bookmark'
+    }
 }
 
 // Create movie card element
 function createMovieCard(movie) {
-  const movieCard = document.createElement("div")
-  movieCard.className = "movie-card"
-  movieCard.dataset.id = movie.id
+    const movieCard = document.createElement("div")
+    movieCard.className = "movie-card"
+    movieCard.dataset.id = movie.id
+    movieCard.dataset.type = "movie"
 
-  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"
+    const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"
+    const isBookmarked = bookmarkedMoviesData.some(bm => bm.id === movie.id)
+    const bookmarkIconClass = isBookmarked ? "fas" : "far"
 
-  movieCard.innerHTML = `
+    movieCard.innerHTML = `
         <div class="movie-rating">
             <i class="fas fa-star"></i> ${rating}
+        </div>
+        <div class="bookmark-icon ${isBookmarked ? 'active' : ''}">
+            <i class="${bookmarkIconClass} fa-bookmark"></i>
         </div>
         <img src="${movie.poster_path ? IMAGE_BASE_URL + movie.poster_path : "/placeholder.svg?height=300&width=200"}" 
              alt="${movie.title}" 
@@ -1160,29 +2244,100 @@ function createMovieCard(movie) {
         <h3 class="movie-title">${movie.title}</h3>
     `
 
-  // Add click event to open modal with movie details
-  movieCard.addEventListener("click", () => openMovieDetails(movie.id))
+    // Add click event to open modal with movie details
+    movieCard.addEventListener("click", (e) => {
+        // Don't open modal if bookmark icon was clicked
+        if (!e.target.closest('.bookmark-icon')) {
+            openMovieDetails(movie.id)
+        }
+    })
 
-  return movieCard
+    // Add bookmark functionality
+    const bookmarkIcon = movieCard.querySelector('.bookmark-icon')
+    if (bookmarkIcon) {
+        bookmarkIcon.addEventListener('click', (e) => {
+            e.stopPropagation()
+            toggleBookmark(movie)
+            
+            // Update the icon
+            const iconElement = bookmarkIcon.querySelector('i')
+            if (bookmarkedMoviesData.some(bm => bm.id === movie.id)) {
+                bookmarkIcon.classList.add('active')
+                iconElement.classList.remove('far')
+                iconElement.classList.add('fas')
+            } else {
+                bookmarkIcon.classList.remove('active')
+                iconElement.classList.remove('fas')
+                iconElement.classList.add('far')
+            }
+        })
+    }
+
+    return movieCard
+}
+
+// Toggle bookmark for a movie
+function toggleBookmark(movie) {
+    const index = bookmarkedMoviesData.findIndex(bm => bm.id === movie.id)
+    
+    if (index === -1) {
+        // Add to bookmarks
+        bookmarkedMoviesData.push(movie)
+    } else {
+        // Remove from bookmarks
+        bookmarkedMoviesData.splice(index, 1)
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('bookmarkedMovies', JSON.stringify(bookmarkedMoviesData))
+    
+    // Update hero bookmark button if this is the current hero movie
+    if (currentHeroMovie && currentHeroMovie.id === movie.id) {
+        updateHeroBookmarkButton()
+    }
+    
+    // Update bookmarked movies section
+    updateBookmarkedMoviesSection()
+}
+
+// Update bookmarked movies section
+function updateBookmarkedMoviesSection() {
+    if (bookmarkedMoviesData.length === 0) {
+        bookmarkedSection.style.display = 'none'
+        return
+    }
+    
+    bookmarkedSection.style.display = 'block'
+    bookmarkedMovies.innerHTML = ''
+    
+    bookmarkedMoviesData.forEach(movie => {
+        bookmarkedMovies.appendChild(createMovieCard(movie))
+    })
 }
 
 // Open movie details modal
 async function openMovieDetails(movieId) {
-  const movieDetails = await fetchMovieDetails(movieId)
-  if (!movieDetails) return
+    const movieDetails = await fetchMovieDetails(movieId)
+    if (!movieDetails) return
 
-  const releaseYear = movieDetails.release_date ? new Date(movieDetails.release_date).getFullYear() : ""
-  const runtime = movieDetails.runtime
-    ? `${Math.floor(movieDetails.runtime / 60)}h ${movieDetails.runtime % 60}m`
-    : "N/A"
-  const genres = movieDetails.genres.map((genre) => genre.name).join(", ")
-  const directors = movieDetails.credits.crew
-    .filter((person) => person.job === "Director")
-    .map((director) => director.name)
-    .join(", ")
-  const trailer = movieDetails.videos.results.find((video) => video.type === "Trailer" && video.site === "YouTube")
+    const releaseYear = movieDetails.release_date ? new Date(movieDetails.release_date).getFullYear() : ""
+    const runtime = movieDetails.runtime
+        ? `${Math.floor(movieDetails.runtime / 60)}h ${movieDetails.runtime % 60}m`
+        : "N/A"
+    const genres = movieDetails.genres.map((genre) => genre.name).join(", ")
+    const directors = movieDetails.credits.crew
+        .filter((person) => person.job === "Director")
+        .map((director) => director.name)
+        .join(", ")
+    const trailer = movieDetails.videos.results.find((video) => video.type === "Trailer" && video.site === "YouTube")
+    
+    // Check if movie is bookmarked
+    const isBookmarked = bookmarkedMoviesData.some(movie => movie.id === movieDetails.id)
+    const bookmarkBtnHTML = isBookmarked 
+        ? `<button class="btn btn-secondary bookmark-detail-btn" data-id="${movieDetails.id}"><i class="fas fa-bookmark"></i> Remove Bookmark</button>`
+        : `<button class="btn btn-secondary bookmark-detail-btn" data-id="${movieDetails.id}"><i class="far fa-bookmark"></i> Bookmark</button>`
 
-  modalBody.innerHTML = `
+    modalBody.innerHTML = `
         <div class="movie-detail-header" style="background-image: url('${movieDetails.backdrop_path ? BACKDROP_BASE_URL + movieDetails.backdrop_path : ""}')">
             <div class="movie-detail-info">
                 <img src="${movieDetails.poster_path ? IMAGE_BASE_URL + movieDetails.poster_path : "/placeholder.svg?height=300&width=200"}" 
@@ -1204,9 +2359,8 @@ async function openMovieDetails(movieId) {
                     </div>
                     <p class="movie-detail-overview">${movieDetails.overview}</p>
                     <div class="movie-detail-actions">
-                        
-                        ${trailer ? `<a href="https://www.youtube.com/watch?v=${trailer.key}" target="_blank" class="btn btn-secondary"><i class="fas fa-film"></i> Watch Trailer</a>` : ""}
-                        <button class="btn btn-secondary"><i class="fas fa-plus"></i> Add to List</button>
+                        ${trailer ? `<a href="https://www.youtube.com/watch?v=${trailer.key}" target="_blank" class="btn btn-primary"><i class="fas fa-play"></i> Watch Trailer</a>` : ""}
+                        ${bookmarkBtnHTML}
                     </div>
                 </div>
             </div>
@@ -1242,172 +2396,306 @@ async function openMovieDetails(movieId) {
         </div>
     `
 
-  modal.style.display = "block"
-  document.body.style.overflow = "hidden"
+    // Add event listener to bookmark button in modal
+    const bookmarkDetailBtn = modalBody.querySelector('.bookmark-detail-btn')
+    if (bookmarkDetailBtn) {
+        bookmarkDetailBtn.addEventListener('click', () => {
+            toggleBookmark(movieDetails)
+            
+            // Update button text and icon
+            if (bookmarkedMoviesData.some(movie => movie.id === movieDetails.id)) {
+                bookmarkDetailBtn.innerHTML = '<i class="fas fa-bookmark"></i> Remove Bookmark'
+            } else {
+                bookmarkDetailBtn.innerHTML = '<i class="far fa-bookmark"></i> Bookmark'
+            }
+        })
+    }
+
+    modal.style.display = "block"
+    document.body.style.overflow = "hidden"
 }
 
 // Close modal
 function closeMovieModal() {
-  modal.style.display = "none"
-  document.body.style.overflow = "auto"
+    modal.style.display = "none"
+    document.body.style.overflow = "auto"
+}
+
+// Get mood-based movies
+function getMoodBasedMovies(mood, genres) {
+    // Define mood-specific parameters
+    const moodParams = {
+        happy: {
+            genres: ['35', '16', '10751'], // Comedy, Animation, Family
+            keywords: 'feel-good,comedy,fun',
+            title: 'Happy Movies for You'
+        },
+        sad: {
+            genres: ['18', '10749'], // Drama, Romance
+            keywords: 'emotional,touching,heartwarming',
+            title: 'Movies to Lift Your Mood'
+        },
+        excited: {
+            genres: ['28', '12', '878'], // Action, Adventure, Sci-Fi
+            keywords: 'exciting,thrilling,adventure',
+            title: 'Exciting Movies for You'
+        }
+    }
+    
+    // If user selected genres, use those instead of mood defaults
+    const genresToUse = genres.length > 0 ? genres : moodParams[mood].genres
+    
+    // Update section title based on mood
+    moodBasedTitle.textContent = genres.length > 0 
+        ? 'Movies Based on Your Genre Preferences' 
+        : moodParams[mood].title
+    
+    // Fetch movies by genre
+    return fetchMoviesByGenre(genresToUse)
+}
+
+// Apply user preferences (mood and genres)
+async function applyUserPreferences() {
+    if (!currentMood) {
+        alert('Please select your mood first!')
+        return
+    }
+    
+    // Get selected genres
+    selectedGenres = getSelectedGenres()
+    
+    // Get mood-based movie recommendations
+    const moodMovies = await getMoodBasedMovies(currentMood, selectedGenres)
+    
+    // Update UI
+    moodBasedSection.style.display = 'block'
+    moodBasedMovies.innerHTML = ''
+    
+    if (moodMovies.length > 0) {
+        moodMovies.forEach(movie => {
+            moodBasedMovies.appendChild(createMovieCard(movie))
+        })
+    } else {
+        moodBasedMovies.innerHTML = '<p class="no-results">No movies found matching your preferences. Try different genres!</p>'
+    }
+    
+    // Hide preferences panel after applying
+    moodSelector.classList.remove('active')
+    
+    // Scroll to mood-based section
+    moodBasedSection.scrollIntoView({ behavior: 'smooth' })
 }
 
 // Initialize sliders
-// Improve the initializeSliders function to handle empty responses
 async function initializeSliders() {
-  try {
-    // Use top rated movies for the trending section
-    const topRatedMovies = await fetchMovies("/movie/top_rated")
-    const trendingSlider = document.getElementById("trendingMovies")
-    if (trendingSlider && topRatedMovies && topRatedMovies.length > 0) {
-      // Clear any existing content
-      trendingSlider.innerHTML = ""
-      topRatedMovies.forEach((movie) => {
-        trendingSlider.appendChild(createMovieCard(movie))
-      })
-    } else {
-      console.error("Trending slider not found or no top rated movies returned")
-    }
+    try {
+        // Use top rated movies for the trending section
+        const topRatedMovies = await fetchMovies("/movie/top_rated")
+        const trendingSlider = document.getElementById("trendingMovies")
+        if (trendingSlider && topRatedMovies && topRatedMovies.length > 0) {
+            // Clear any existing content
+            trendingSlider.innerHTML = ""
+            topRatedMovies.forEach((movie) => {
+                trendingSlider.appendChild(createMovieCard(movie))
+            })
+        } else {
+            console.error("Trending slider not found or no top rated movies returned")
+        }
 
-    // Fetch popular movies
-    const popularMovies = await fetchMovies("/movie/popular")
-    const popularSlider = document.getElementById("popularMovies")
-    if (popularSlider && popularMovies && popularMovies.length > 0) {
-      // Clear any existing content
-      popularSlider.innerHTML = ""
-      popularMovies.forEach((movie) => {
-        popularSlider.appendChild(createMovieCard(movie))
-      })
-    } else {
-      console.error("Popular slider not found or no popular movies returned")
-    }
+        // Fetch popular movies
+        const popularMovies = await fetchMovies("/movie/popular")
+        const popularSlider = document.getElementById("popularMovies")
+        if (popularSlider && popularMovies && popularMovies.length > 0) {
+            // Clear any existing content
+            popularSlider.innerHTML = ""
+            popularMovies.forEach((movie) => {
+                popularSlider.appendChild(createMovieCard(movie))
+            })
+        } else {
+            console.error("Popular slider not found or no popular movies returned")
+        }
 
-    // Fetch top rated movies for the top rated section
-    const topRatedMoviesForSection = await fetchMovies("/movie/top_rated")
-    const topRatedSlider = document.getElementById("topRatedMovies")
-    if (topRatedSlider && topRatedMoviesForSection && topRatedMoviesForSection.length > 0) {
-      // Clear any existing content
-      topRatedSlider.innerHTML = ""
-      topRatedMoviesForSection.forEach((movie) => {
-        topRatedSlider.appendChild(createMovieCard(movie))
-      })
-    } else {
-      console.error("Top rated slider not found or no top rated movies returned")
+        // Fetch top rated movies for the top rated section
+        const topRatedMoviesForSection = await fetchMovies("/movie/top_rated")
+        const topRatedSlider = document.getElementById("topRatedMovies")
+        if (topRatedSlider && topRatedMoviesForSection && topRatedMoviesForSection.length > 0) {
+            // Clear any existing content
+            topRatedSlider.innerHTML = ""
+            topRatedMoviesForSection.forEach((movie) => {
+                topRatedSlider.appendChild(createMovieCard(movie))
+            })
+        } else {
+            console.error("Top rated slider not found or no top rated movies returned")
+        }
+    } catch (error) {
+        console.error("Error initializing sliders:", error)
     }
-  } catch (error) {
-    console.error("Error initializing sliders:", error)
-  }
 }
 
 // Slider navigation
 function initializeSliderControls() {
-  const sliders = document.querySelectorAll(".movie-slider")
+    const sliders = document.querySelectorAll(".movie-slider")
 
-  sliders.forEach((slider) => {
-    const prevBtn = slider.parentElement.querySelector(".prev")
-    const nextBtn = slider.parentElement.querySelector(".next")
+    sliders.forEach((slider) => {
+        const prevBtn = slider.parentElement.querySelector(".prev")
+        const nextBtn = slider.parentElement.querySelector(".next")
 
-    nextBtn.addEventListener("click", () => {
-      slider.scrollLeft += slider.offsetWidth - 100
+        if (prevBtn && nextBtn) {
+            nextBtn.addEventListener("click", () => {
+                slider.scrollLeft += slider.offsetWidth - 100
+            })
+
+            prevBtn.addEventListener("click", () => {
+                slider.scrollLeft -= slider.offsetWidth - 100
+            })
+        }
     })
-
-    prevBtn.addEventListener("click", () => {
-      slider.scrollLeft -= slider.offsetWidth - 100
-    })
-  })
 }
 
 // Smooth scrolling for sliders
-// Fix the touchmove event listener in initializeSmoothScrolling
 function initializeSmoothScrolling() {
-  document.querySelectorAll(".movie-slider").forEach((slider) => {
-    let isDown = false
-    let startX = 0
-    let scrollLeft = 0
-    let animationFrame
+    document.querySelectorAll(".movie-slider").forEach((slider) => {
+        let isDown = false
+        let startX = 0
+        let scrollLeft = 0
+        let animationFrame
 
-    const setGrabbing = () => slider.classList.add("grabbing")
-    const removeGrabbing = () => slider.classList.remove("grabbing")
+        const setGrabbing = () => slider.classList.add("grabbing")
+        const removeGrabbing = () => slider.classList.remove("grabbing")
 
-    const onMouseDown = (e) => {
-      isDown = true
-      startX = e.pageX - slider.offsetLeft
-      scrollLeft = slider.scrollLeft
-      setGrabbing()
-    }
+        const onMouseDown = (e) => {
+            isDown = true
+            startX = e.pageX - slider.offsetLeft
+            scrollLeft = slider.scrollLeft
+            setGrabbing()
+        }
 
-    const onMouseMove = (e) => {
-      if (!isDown) return
-      e.preventDefault()
-      const x = e.pageX - slider.offsetLeft
-      const walk = (x - startX) * 1.5 // Adjust speed multiplier here
-      cancelAnimationFrame(animationFrame)
-      animationFrame = requestAnimationFrame(() => {
-        slider.scrollLeft = scrollLeft - walk
-      })
-    }
+        const onMouseMove = (e) => {
+            if (!isDown) return
+            e.preventDefault()
+            const x = e.pageX - slider.offsetLeft
+            const walk = (x - startX) * 1.5 // Adjust speed multiplier here
+            cancelAnimationFrame(animationFrame)
+            animationFrame = requestAnimationFrame(() => {
+                slider.scrollLeft = scrollLeft - walk
+            })
+        }
 
-    const onMouseUpOrLeave = () => {
-      isDown = false
-      removeGrabbing()
-    }
+        const onMouseUpOrLeave = () => {
+            isDown = false
+            removeGrabbing()
+        }
 
-    slider.addEventListener("mousedown", onMouseDown)
-    slider.addEventListener("mousemove", onMouseMove)
-    slider.addEventListener("mouseup", onMouseUpOrLeave)
-    slider.addEventListener("mouseleave", onMouseUpOrLeave)
+        slider.addEventListener("mousedown", onMouseDown)
+        slider.addEventListener("mousemove", onMouseMove)
+        slider.addEventListener("mouseup", onMouseUpOrLeave)
+        slider.addEventListener("mouseleave", onMouseUpOrLeave)
 
-    // Add touch support for mobile - fix the syntax error
-    slider.addEventListener("touchstart", (e) => {
-      isDown = true
-      startX = e.touches[0].pageX - slider.offsetLeft
-      scrollLeft = slider.scrollLeft
+        // Add touch support for mobile
+        slider.addEventListener("touchstart", (e) => {
+            isDown = true
+            startX = e.touches[0].pageX - slider.offsetLeft
+            scrollLeft = slider.scrollLeft
+        })
+
+        slider.addEventListener("touchmove", (e) => {
+            if (!isDown) return
+            const x = e.touches[0].pageX - slider.offsetLeft
+            const walk = (x - startX) * 1.5
+            cancelAnimationFrame(animationFrame)
+            animationFrame = requestAnimationFrame(() => {
+                slider.scrollLeft = scrollLeft - walk
+            })
+        })
+
+        slider.addEventListener("touchend", () => (isDown = false))
+        slider.addEventListener("touchcancel", () => (isDown = false))
     })
-
-    slider.addEventListener("touchmove", (e) => {
-      if (!isDown) return
-      const x = e.touches[0].pageX - slider.offsetLeft
-      const walk = (x - startX) * 1.5
-      cancelAnimationFrame(animationFrame)
-      animationFrame = requestAnimationFrame(() => {
-        slider.scrollLeft = scrollLeft - walk
-      })
-    })
-
-    slider.addEventListener("touchend", () => (isDown = false))
-    slider.addEventListener("touchcancel", () => (isDown = false))
-  })
 }
 
 // Event listeners
-closeModal.addEventListener("click", closeMovieModal)
-window.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    closeMovieModal()
-  }
-})
-
-// Initialize when DOM is loaded
-// Initialize when DOM is loaded - add a small delay to ensure all elements are ready
 document.addEventListener("DOMContentLoaded", () => {
-  // Add a small delay to ensure DOM is fully loaded
-  setTimeout(() => {
-    console.log("Initializing application...")
-    updateHeroSection() // Update hero section with now playing movie
-    initializeSliders()
-    initializeSliderControls()
-    initializeSmoothScrolling()
-    console.log("Application initialized")
-  }, 100)
+    // Initialize theme
+    initTheme()
+    
+    // Theme toggle
+    themeIcon.addEventListener('click', toggleTheme)
+    
+    // Preferences button
+    preferencesBtn.addEventListener('click', togglePreferences)
+    
+    // Close preferences
+    closePreferences.addEventListener('click', togglePreferences)
+    
+    // Mood selection
+    moodOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            selectMood(option.dataset.mood)
+        })
+    })
+    
+    // Apply preferences button
+    applyPreferencesBtn.addEventListener('click', applyUserPreferences)
+    
+    // Hero bookmark button
+    heroBookmarkBtn.addEventListener('click', () => {
+        if (currentHeroMovie) {
+            toggleBookmark(currentHeroMovie)
+        }
+    })
+    
+    // Bookmarks link
+    bookmarksLink.addEventListener('click', (e) => {
+        e.preventDefault()
+        bookmarkedSection.style.display = 'block'
+        bookmarkedSection.scrollIntoView({ behavior: 'smooth' })
+    })
+    
+    // Close modal
+    closeModal.addEventListener("click", closeMovieModal)
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeMovieModal()
+        }
+    })
+    
+    // Handle escape key to close modal
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "block") {
+            closeMovieModal()
+        }
+    })
+    
+    // Navigation
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault()
+            navigateTo(link.dataset.page)
+        })
+    })
+    
+    // Footer navigation
+    footerNavLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault()
+            navigateTo(link.dataset.page)
+        })
+    })
+    
+    // Setup search
+    setupSearch()
+    
+    // Initialize app
+    setTimeout(() => {
+        console.log("Initializing application...")
+        updateHeroSection()
+        initializeSliders()
+        initializeSliderControls()
+        initializeSmoothScrolling()
+        updateBookmarkedMoviesSection()
+        console.log("Application initialized")
+    }, 100)
 })
-
-// Handle escape key to close modal
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modal.style.display === "block") {
-    closeMovieModal()
-  }
-})
-
 </script>
 </body>
 </html>
